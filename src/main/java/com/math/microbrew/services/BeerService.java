@@ -5,5 +5,7 @@ import com.math.microbrew.web.model.BeerDto;
 import java.util.UUID;
 
 public interface BeerService {
-    BeerDto getBeerbyId(UUID uuid);
+//    BeerDto getBeerbyId(UUID uuid);
+
+    BeerDto getbyId(int id);
 }

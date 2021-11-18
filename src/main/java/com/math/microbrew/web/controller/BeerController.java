@@ -21,9 +21,14 @@ public class BeerController {
         this.beerService = beerService;
     }
 
-    @GetMapping("/{beerId}")
-    public ResponseEntity<BeerDto> getBeer(@PathVariable("beerId") UUID beerId){
+//    @GetMapping("/{beerId}")
+//    public ResponseEntity<BeerDto> getBeer(@PathVariable("beerId") UUID beerId){
+//
+//        return new ResponseEntity<>(beerService.getBeerbyId(beerId), HttpStatus.OK);
+//    }
 
-        return new ResponseEntity<>(beerService.getBeerbyId(beerId), HttpStatus.OK);
+    @GetMapping("/{id}")
+    public ResponseEntity<BeerDto> getBeer(@PathVariable int id){
+        return new ResponseEntity<BeerDto>(beerService.getbyId(id), HttpStatus.BAD_REQUEST);
     }
 }
