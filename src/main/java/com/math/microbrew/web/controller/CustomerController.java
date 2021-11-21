@@ -2,6 +2,7 @@ package com.math.microbrew.web.controller;
 
 import com.math.microbrew.services.CustomerService;
 import com.math.microbrew.web.model.CustomerDto;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -9,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/api/v1/customer/")
+@RequestMapping("/api/v1/customer")
 public class CustomerController {
 
     private final CustomerService customerService;
@@ -24,16 +25,19 @@ public class CustomerController {
     }
 
     @PostMapping
-    public ResponseEntity<CustomerDto> createCustomer(@RequestBody UUID id){
+    public ResponseEntity<CustomerDto> createCustomer(@RequestBody CustomerDto customerDto){
 
-        customerService.saveCustomer(id);
-        return new ResponseEntity<>(HttpStatus.CREATED);
+        CustomerDto savedCustomer = customerService.saveCustomer(customerDto);
+
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.add("Location", "http://localhost:8080/api/v1/customer/" + savedCustomer.getId());
+        return new ResponseEntity<>(httpHeaders, HttpStatus.CREATED);
     }
 
     @PutMapping("/update/{id}")
-    public ResponseEntity<CustomerDto> updateCustomer(@PathVariable UUID id){
+    public ResponseEntity<CustomerDto> updateCustomer(@PathVariable UUID id, CustomerDto customerDto){
 
-        customerService.updateCustomer(id);
+        customerService.updateCustomer(id, customerDto);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
