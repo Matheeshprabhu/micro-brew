@@ -4,15 +4,12 @@ import com.math.microbrew.services.CustomerService;
 import com.math.microbrew.web.model.CustomerDto;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/customer/details/")
+@RequestMapping("/api/v1/customer/")
 public class CustomerController {
 
     private final CustomerService customerService;
@@ -24,5 +21,26 @@ public class CustomerController {
     @GetMapping("/{id}")
     public ResponseEntity<CustomerDto> getCustomer(@PathVariable("id") UUID id){
         return new ResponseEntity<>(customerService.getCustomerById(id), HttpStatus.OK);
+    }
+
+    @PostMapping
+    public ResponseEntity<CustomerDto> createCustomer(@RequestBody UUID id){
+
+        customerService.saveCustomer(id);
+        return new ResponseEntity<>(HttpStatus.CREATED);
+    }
+
+    @PutMapping("/update/{id}")
+    public ResponseEntity<CustomerDto> updateCustomer(@PathVariable UUID id){
+
+        customerService.updateCustomer(id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    @DeleteMapping("/delete/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteCustomer(@PathVariable UUID id){
+
+        customerService.deleteCustomer(id);
     }
 }
