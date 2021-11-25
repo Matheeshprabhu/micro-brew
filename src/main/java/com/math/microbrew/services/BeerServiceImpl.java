@@ -10,13 +10,13 @@ import java.util.UUID;
 @Slf4j
 public class BeerServiceImpl implements BeerService {
     @Override
-    public BeerDto getBeerbyId(UUID uuid) {
-        return BeerDto.builder().uuid(uuid).beerName("Kingfisher").beerStyle("can").build();
+    public BeerDto getBeerbyId(UUID id) {
+        return BeerDto.builder().id(id).beerName("Kingfisher").beerStyle("can").build();
     }
 
     @Override
     public BeerDto saveNewBeer(BeerDto beerDto) {
-        return BeerDto.builder().uuid(UUID.randomUUID()).build();
+        return BeerDto.builder().id(UUID.randomUUID()).build();
     }
 
     @Override
